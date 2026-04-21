@@ -108,5 +108,44 @@ END;
 UPDATE teacher
 SET NAME= CASE
     WHEN age = 65 THEN 'lali'
-     
+    WHEN age = 60 THEN 'jali'
 END;
+
+
+SELECT * FROM admin;
+
+--Make sure admin have row
+INSERT INTO admin (name, role)
+VALUES
+('Main Admin', 'Super Admin');
+
+
+-- for student
+ALTER TABLE students
+ADD COLUMN admin_id INT;
+
+--for teacher
+ALTER TABLE teacher
+ADD COLUMN admin_id INT;
+
+SELECT * FROM teacher;
+SELECT * FROM students;
+
+UPDATE students
+SET admin_id = 2
+WHERE admin_id IS NULL;
+
+UPDATE teacher
+SET admin_id = 1
+WHERE admin_id IS NULL;
+
+
+ALTER TABLE students
+ADD CONSTRAINT fk_students_admin
+FOREIGN KEY (admin_id) REFERENCES admin(id);
+
+ALTER TABLE teacher
+ADD CONSTRAINT fk_teacher_admin
+FOREIGN KEY (admin_id) REFERENCES admin(id);
+
+
